@@ -54,7 +54,7 @@ void MainWindow::on_pushButton_2_clicked()
         {
           SerialState = true;
           ui->pushButton_2->setText(QString::fromUtf8("¹Ø±Õ´®¿Ú"));
-          timer.start(10);
+          timer.start(100);
         }
     }
     else
@@ -95,7 +95,8 @@ void MainWindow::SerialReceive(const unsigned char * p , unsigned int lenght)
         value[2] = p[12]<<24|p[11]<<16|p[10]<<8|p[9];
         value[3] = p[16]<<24|p[15]<<16|p[14]<<8|p[13];
         int check = value [0] + value [1] + value [2] + value [3];
-        if((check&0xf)==p[17])
+		unsigned char mCheck = check & 0xff;
+		if (mCheck == p[17])
         {
             ui->label_5->setText(QString::number(value[0]));
             ui->label_6->setText(QString::number(value[1]));
